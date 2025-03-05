@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/search.js"></script> <!-- JavaScript for search functionality -->
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <h1>E-shop</h1>
+            </div>
+            <div class="nav-center">
+                <input type="text" id="searchBar" placeholder="Search products...">
+            </div>
+            <div class="nav-right">
+                <% if (session && session.userId) { %>
+                    <a href="/profile">Profile</a>
+                    <a href="/cart">Cart</a>
+                    <a href="/orders">My Orders</a>
+                    <a href="/logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed-fill" viewBox="0 0 16 16">
+                            <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                          </svg>
+                        Logout</a>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                <% } %>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="product-container" id="productList">
+            <% products.forEach(product => { %>
+                <div class="product-card" data-name="<%= product.name.toLowerCase() %>">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <div class="product-info">
+                        <h2><%= product.name %></h2>
+                        <p><strong>Price:</strong> $<%= product.price %></p>
+                        <p><strong>Description:</strong> <%= product.description %></p>
+                        <% if (session && session.userId) { %>
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="product_id" value="<%= product.id %>">
+                                <button type="submit" class="btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                      </svg>            Add to Cart</button>
+                            </form>
+                        <% } else { %>
+                            <p><a href="/login" class="btn login-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                  </svg>
+                                            Login to add to cart</a></p>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+</body>
+</html>
