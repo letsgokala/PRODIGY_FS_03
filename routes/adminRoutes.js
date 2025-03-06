@@ -175,7 +175,7 @@ router.post("/orders/update/:id", async (req, res) => {
 
   try {
     await pool.query("UPDATE orders SET status = $1 WHERE id = $2", [status, id]);
-    res.redirect("/orders");
+    res.redirect("/admin/orders");
   } catch (error) {
     console.error(error);
     res.send("Error updating order status");
