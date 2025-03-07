@@ -6,10 +6,6 @@ import { ensureAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// ============================
-// 📌 Setup Image Upload
-// ============================
-
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: (req, file, cb) => {
@@ -18,9 +14,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ============================
-// 🚀 Admin Dashboard
-// ============================
 
 // 1️⃣ Admin Dashboard
 router.get("/", async (req, res) => {
@@ -52,10 +45,6 @@ router.get("/", async (req, res) => {
 });
 
   
-
-// ============================
-// 🚀 Manage Products (CRUD)
-// ============================
 
 // 2️⃣ View All Products
 router.get("/products", async (req, res) => {
@@ -140,9 +129,6 @@ router.post("/products/delete/:id", async (req, res) => {
   }
 });
 
-// ============================
-// 🚀 Manage Orders
-// ============================
 
 // 8️⃣ View All Orders
 router.get("/orders", async (req, res) => {
